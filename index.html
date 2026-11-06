@@ -1,0 +1,286 @@
+這是一份加入了「3D 雙開門動畫」的全新 HTML 程式碼。當賓客點擊畫面時，兩扇門會向外推開，隨後淡入你的喜帖內容並自動播放音樂。
+
+你可以直接複製並儲存為 `index.html`。
+
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我們的婚禮</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-family: 'Helvetica Neue', Arial, 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
+            overflow-x: hidden;
+            background-color: #fcfbf8;
+            scroll-behavior: smooth;
+            color: #5a4f43;
+        }
+
+        /* 3D 開門動畫區塊 */
+        #door-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            perspective: 1200px; /* 3D 透視視角 */
+            display: flex;
+            cursor: pointer;
+            background-color: #000; /* 門後的背景色，避免開門瞬間漏出白邊 */
+            transition: visibility 2s;
+        }
+
+        /* 門板共用樣式 */
+        .door {
+            width: 50%;
+            height: 100%;
+            background-color: #e8ded2;
+            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            border: 2px solid #d3c4b3;
+        }
+
+        /* 左邊的門 */
+        .door-left {
+            transform-origin: left;
+            justify-content: flex-end;
+            border-right: 1px solid #c4b3a0;
+        }
+
+        /* 右邊的門 */
+        .door-right {
+            transform-origin: right;
+            justify-content: flex-start;
+            border-left: 1px solid #c4b3a0;
+        }
+
+        /* 門把裝飾 */
+        .door-handle {
+            width: 15px;
+            height: 60px;
+            background-color: #a48671;
+            border-radius: 8px;
+            margin: 0 20px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        /* 點擊開門提示文字 */
+        #door-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            letter-spacing: 4px;
+            color: #6d5b4b;
+            background: rgba(232, 222, 210, 0.8);
+            padding: 15px 30px;
+            border-radius: 30px;
+            pointer-events: none; /* 確保點擊能穿透到門上 */
+            transition: opacity 0.5s;
+            z-index: 10000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* 開門狀態：左門向左旋轉，右門向右旋轉 */
+        .open .door-left { transform: rotateY(-105deg); }
+        .open .door-right { transform: rotateY(105deg); }
+        .open #door-text { opacity: 0; }
+
+        /* 喜帖主內容區 */
+        #main-content {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 2s ease-in-out;
+            transition-delay: 0.5s; /* 等門開一半再慢慢浮現 */
+        }
+        #main-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 區段共通設定 */
+        .section {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        /* 圖片/動畫通用樣式 */
+        .design-media {
+            max-width: 100%;
+            width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            object-fit: cover;
+        }
+
+        .cover-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        /* 文字資訊框樣式 */
+        .info-box {
+            text-align: center;
+            line-height: 1.8;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* 區塊背景微調 */
+        #section-1 { background-color: #fcfbf8; }
+        #section-2 { background-color: #f4efea; }
+        #section-3 { background-color: #fcfbf8; }
+
+        /* 浮動音樂控制按鈕 */
+        #music-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: rgba(164, 134, 113, 0.8);
+            color: white;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            opacity: 0; /* 預設隱藏，開門後顯示 */
+            transition: opacity 1s;
+        }
+        #music-toggle.visible { opacity: 1; }
+
+        .spin { animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- 背景音樂 -->
+    <audio id="bg-music" loop>
+        <source src="你的音樂連結.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 3D 雙開門入口 -->
+    <div id="door-wrapper" onclick="openInvitation()">
+        <div id="door-text">點擊開門</div>
+        <div class="door door-left">
+            <div class="door-handle"></div>
+        </div>
+        <div class="door door-right">
+            <div class="door-handle"></div>
+        </div>
+    </div>
+
+    <!-- 主要內容區 -->
+    <div id="main-content">
+        
+        <!-- 第一張：真人照片封面 -->
+        <div id="section-1" class="section">
+            <!-- 請將 src 替換為你的真人照片連結 -->
+            <img src="你的第一張真人照片連結.jpg" alt="婚禮封面" class="cover-img">
+        </div>
+
+        <!-- 第二張：動畫設計與內容 -->
+        <div id="section-2" class="section">
+            <!-- 若為影片格式，請使用 <video src="你的動畫連結.mp4" class="design-media" autoplay loop muted playsinline></video> -->
+            <img src="你的第二張動畫連結.gif" alt="動畫設計" class="design-media">
+            
+            <div class="info-box">
+                <!-- 在此處輸入或貼上你的第二張文字內容 (如：名字、時間、地點等) -->
+                <p>這裡是第二張的內容區塊</p>
+            </div>
+        </div>
+
+        <!-- 第三張：內容 -->
+        <div id="section-3" class="section">
+            <!-- 請將 src 替換為你的第三張圖片連結 -->
+            <img src="你的第三張內容圖片連結.jpg" alt="內容設計" class="design-media">
+            
+            <div class="info-box">
+                <!-- 在此處輸入或貼上你的第三張文字內容 (如：地圖、交通資訊等) -->
+                <p>這裡是第三張的內容區塊</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 音樂控制按鈕 -->
+    <button id="music-toggle" onclick="toggleMusic(event)">🎵</button>
+
+    <script>
+        const doorWrapper = document.getElementById("door-wrapper");
+        const mainContent = document.getElementById("main-content");
+        const music = document.getElementById("bg-music");
+        const musicBtn = document.getElementById("music-toggle");
+        let isPlaying = false;
+        let isOpened = false;
+
+        function openInvitation() {
+            if (isOpened) return;
+            isOpened = true;
+
+            // 觸發開門動畫
+            doorWrapper.classList.add("open");
+            
+            // 延遲讓主內容浮現
+            mainContent.classList.add("visible");
+            musicBtn.classList.add("visible");
+            window.scrollTo(0, 0);
+
+            // 等待動畫結束後將門的區塊隱藏，避免擋住點擊事件
+            setTimeout(() => {
+                doorWrapper.style.visibility = "hidden";
+            }, 2000);
+
+            // 播放音樂
+            music.play().then(() => {
+                isPlaying = true;
+                musicBtn.classList.add("spin");
+            }).catch((error) => {
+                console.log("瀏覽器阻擋自動播放:", error);
+            });
+        }
+
+        function toggleMusic(event) {
+            event.stopPropagation(); // 防止點擊按鈕時觸發背景的其他點擊事件
+            if (isPlaying) {
+                music.pause();
+                musicBtn.classList.remove("spin");
+                musicBtn.style.opacity = "0.5";
+            } else {
+                music.play();
+                musicBtn.classList.add("spin");
+                musicBtn.style.opacity = "1";
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+</body>
+</html>
+
+```
