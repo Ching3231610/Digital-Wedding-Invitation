@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>黃柏齊&李佳樺的婚禮</title>
+    <title>我們的婚禮</title>
     <style>
         body, html {
             margin: 0;
@@ -99,7 +99,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 2s ease-in-out;
-            padding-top: 15px; /* 與上方保留一點距離 */
+            padding-top: 15px;
         }
 
         #main-content.visible {
@@ -107,34 +107,73 @@
             visibility: visible;
         }
 
-        /* 內頁照片的專屬容器 (加上一點 padding 露出底色邊框) */
         .photo-container {
             width: 100%;
-            padding: 15px; /* 這裡的 15px 就是底色邊框的寬度 */
+            padding: 15px; 
             box-sizing: border-box;
             display: flex;
             justify-content: center;
         }
 
-        /* 內頁照片樣式 */
         .content-img {
             width: 100%;
             max-width: 500px;
             height: auto;
-            border-radius: 8px; /* 微微的圓角讓邊緣更柔和 */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* 微微的陰影增加立體感 */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             display: block;
         }
 
-        /* 4. 地圖區塊 */
-        .section-map {
-            min-height: 50vh;
+        /* 4. 倒數計時區塊樣式 */
+        .countdown-section {
             width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 50px 20px;
+            padding: 40px 20px 20px 20px;
+            box-sizing: border-box;
+        }
+
+        .countdown-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.4); /* 微透的毛玻璃質感底色 */
+            padding: 12px 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            min-width: 55px;
+        }
+
+        .time-num {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #836d5d;
+            margin-bottom: 4px;
+        }
+
+        .time-label {
+            font-size: 0.85rem;
+            color: #6a5e51;
+            letter-spacing: 1px;
+        }
+
+        /* 5. 地圖區塊 */
+        .section-map {
+            min-height: 40vh; /* 稍微縮小高度讓畫面緊湊點 */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px 60px 20px;
             box-sizing: border-box;
             background-color: transparent;
         }
@@ -164,7 +203,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.12);
         }
 
-        /* 5. 浮動音樂按鈕 */
+        /* 6. 浮動音樂按鈕 */
         #music-toggle {
             position: fixed;
             bottom: 25px;
@@ -229,7 +268,36 @@
             <img src="photo3.jpg" alt="婚禮照2" class="content-img">
         </div>
 
-            <a href="https://www.google.com/maps?rlz=1C1CHBF_zh-TWTW1070TW1070&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTITCAEQLhiDARivARjHARixAxiABDIGCAIQABgDMgcIAxAAGIAEMgcIBBAAGIAEMgcIBRAAGIAEMgcIBhAAGIAEMgcIBxAAGIAEMg0ICBAuGK8BGMcBGIAEMgcICRAAGIAE0gEINjgxNmowajeoAgCwAgA&um=1&ie=UTF-8&fb=1&gl=tw&sa=X&geocode=KQntfd2oI2g0McWygRcTlTK3&daddr=324%E6%A1%83%E5%9C%92%E5%B8%82%E5%B9%B3%E9%8E%AE%E5%8D%80%E5%BB%A3%E4%BB%81%E9%87%8C%E5%BB%B6%E5%B9%B3%E8%B7%AF%E4%BA%8C%E6%AE%B5371%E8%99%9F" target="_blank" class="map-btn">
+        <!-- 倒數計時區塊 -->
+        <div class="countdown-section">
+            <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 20px; font-size: 1.2rem;">距離我們的婚禮還有</h2>
+            <div class="countdown-container">
+                <div class="time-box">
+                    <span class="time-num" id="cd-days">00</span>
+                    <span class="time-label">天</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-num" id="cd-hours">00</span>
+                    <span class="time-label">時</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-num" id="cd-minutes">00</span>
+                    <span class="time-label">分</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-num" id="cd-seconds">00</span>
+                    <span class="time-label">秒</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 地圖與資訊區塊 -->
+        <div id="section-map" class="section-map">
+            <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.4rem;">婚宴地點</h2>
+            <p class="photo-text" style="margin-bottom: 5px; font-weight: bold;">某某大飯店 宴會廳</p>
+            <p class="photo-text" style="font-size: 0.85rem; margin-bottom: 25px;">台北市信義區某某路1號</p>
+            
+            <a href="https://maps.app.goo.gl/你的地圖連結" target="_blank" class="map-btn">
                 📍 開啟地圖導航
             </a>
         </div>
@@ -293,6 +361,37 @@
             }
             isPlaying = !isPlaying;
         }
+
+        // 倒數計時功能 (目標時間: 2027/05/15 12:00:00)
+        const countDownDate = new Date("2027/05/15 12:00:00").getTime();
+
+        const countdownTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            // 計算天、時、分、秒
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // 如果時間到了，停止計時並顯示 00
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("cd-days").innerText = "00";
+                document.getElementById("cd-hours").innerText = "00";
+                document.getElementById("cd-minutes").innerText = "00";
+                document.getElementById("cd-seconds").innerText = "00";
+                return;
+            }
+
+            // 補零並顯示到畫面上
+            document.getElementById("cd-days").innerText = days;
+            document.getElementById("cd-hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("cd-minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("cd-seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }, 1000);
+
     </script>
 </body>
 </html>
