@@ -99,6 +99,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 2s ease-in-out;
+            padding-top: 15px; /* 與上方保留一點距離 */
         }
 
         #main-content.visible {
@@ -106,7 +107,192 @@
             visibility: visible;
         }
 
-        /* 滿版照片的專屬容器 (移除所有留白與空隙) */
-        .full-width-container {
+        /* 內頁照片的專屬容器 (加上一點 padding 露出底色邊框) */
+        .photo-container {
             width: 100%;
-            margin:
+            padding: 15px; /* 這裡的 15px 就是底色邊框的寬度 */
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 內頁照片樣式 */
+        .content-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px; /* 微微的圓角讓邊緣更柔和 */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* 微微的陰影增加立體感 */
+            display: block;
+        }
+
+        /* 4. 地圖區塊 */
+        .section-map {
+            min-height: 50vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            background-color: transparent;
+        }
+
+        .photo-text {
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            line-height: 1.6;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+            color: #6a5e51;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            margin-top: 20px;
+            background-color: #836d5d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        /* 5. 浮動音樂按鈕 */
+        #music-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(131, 109, 93, 0.85);
+            color: white;
+            border: none;
+            font-size: 20px;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 1s;
+            pointer-events: none;
+        }
+
+        #music-toggle.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spin { animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- 背景音樂 -->
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 1. 歡迎封面 -->
+    <div id="welcome-screen" onclick="startVideo()">
+        <img src="photo1.jpg" alt="婚禮封面" class="cover-photo">
+        <div class="click-hint">點擊照片開啟喜帖</div>
+    </div>
+
+    <!-- 2. 開場影片區 -->
+    <div id="video-screen">
+        <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
+        <video id="intro-video" playsinline>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- 3. 主要內容區 (影片結束後顯示) -->
+    <div id="main-content">
+        
+        <!-- 滑頁照片 1 (帶有些微底色邊框) -->
+        <div class="photo-container">
+            <img src="photo2.jpg" alt="婚禮照1" class="content-img">
+        </div>
+
+        <!-- 滑頁照片 2 (帶有些微底色邊框) -->
+        <div class="photo-container">
+            <img src="photo3.jpg" alt="婚禮照2" class="content-img">
+        </div>
+
+            <a href="https://www.google.com/maps?rlz=1C1CHBF_zh-TWTW1070TW1070&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTITCAEQLhiDARivARjHARixAxiABDIGCAIQABgDMgcIAxAAGIAEMgcIBBAAGIAEMgcIBRAAGIAEMgcIBhAAGIAEMgcIBxAAGIAEMg0ICBAuGK8BGMcBGIAEMgcICRAAGIAE0gEINjgxNmowajeoAgCwAgA&um=1&ie=UTF-8&fb=1&gl=tw&sa=X&geocode=KQntfd2oI2g0McWygRcTlTK3&daddr=324%E6%A1%83%E5%9C%92%E5%B8%82%E5%B9%B3%E9%8E%AE%E5%8D%80%E5%BB%A3%E4%BB%81%E9%87%8C%E5%BB%B6%E5%B9%B3%E8%B7%AF%E4%BA%8C%E6%AE%B5371%E8%99%9F" target="_blank" class="map-btn">
+                📍 開啟地圖導航
+            </a>
+        </div>
+
+    </div>
+
+    <!-- 音樂按鈕 -->
+    <button id="music-toggle" onclick="toggleMusic(event)">🎵</button>
+
+    <script>
+        const welcomeScreen = document.getElementById("welcome-screen");
+        const videoScreen = document.getElementById("video-screen");
+        const video = document.getElementById("intro-video");
+        const mainContent = document.getElementById("main-content");
+        const music = document.getElementById("bg-music");
+        const musicBtn = document.getElementById("music-toggle");
+        let isPlaying = false;
+        let hasStarted = false;
+
+        function startVideo() {
+            if (hasStarted) return;
+            hasStarted = true;
+
+            welcomeScreen.style.opacity = "0";
+            setTimeout(() => { welcomeScreen.style.visibility = "hidden"; }, 1000);
+
+            videoScreen.style.visibility = "visible";
+            videoScreen.style.opacity = "1";
+            video.play().catch(e => console.log("影片播放失敗:", e));
+        }
+
+        function endVideo() {
+            video.pause();
+            videoScreen.style.opacity = "0";
+            setTimeout(() => { videoScreen.style.visibility = "hidden"; }, 1500);
+
+            mainContent.classList.add("visible");
+            window.scrollTo(0, 0);
+
+            musicBtn.classList.add("visible");
+            music.play().then(() => {
+                isPlaying = true;
+                musicBtn.classList.add("spin");
+            }).catch((error) => {
+                console.log("自動播放背景音樂被阻擋:", error);
+            });
+        }
+
+        video.addEventListener('ended', endVideo);
+
+        function toggleMusic(event) {
+            event.stopPropagation();
+            if (isPlaying) {
+                music.pause();
+                musicBtn.classList.remove("spin");
+                musicBtn.style.opacity = "0.5";
+            } else {
+                music.play();
+                musicBtn.classList.add("spin");
+                musicBtn.style.opacity = "1";
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+</body>
+</html>
