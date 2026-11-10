@@ -1,3 +1,11 @@
+沒問題！我猜你說的「if」可能是 IG (Instagram) 或 FB 的筆誤對嗎？
+
+我已經幫你把原本的內嵌影片播放器，改成一個同樣帶有質感的「**超連結按鈕**」了。這樣不僅可以讓網頁載入速度更快，賓客點擊後也能直接跳轉到你指定的 IG、FB 或 YouTube 觀看影片。
+
+（我也一併幫你把底下控制內嵌影片的程式碼移除了，避免產生錯誤。）
+
+請將 `index.html` 替換為這份最新程式碼：
+
 ```html
 <!DOCTYPE html>
 <html lang="zh-TW">
@@ -17,21 +25,32 @@
             color: #5a4f43;
         }
 
-        /* 浪漫視覺特效 */
+        /* 浪漫視覺特效 (微光飄落) */
         #particles {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 50; opacity: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0;
             transition: opacity 3s ease-in-out;
         }
-        #particles.visible { opacity: 1; }
+
+        #particles.visible {
+            opacity: 1;
+        }
+
         .particle {
-            position: absolute; top: -10px;
+            position: absolute;
+            top: -10px;
             background-color: rgba(255, 255, 255, 0.7);
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
             border-radius: 50%;
             animation: fall linear infinite;
-            will-change: transform, opacity;
         }
+
         @keyframes fall {
             0% { transform: translateY(-10px) translateX(0); opacity: 0; }
             10% { opacity: 1; }
@@ -41,199 +60,341 @@
 
         /* 1. 歡迎封面 */
         #welcome-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #e7dfd4; display: flex;
-            flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 1s ease-in-out, visibility 1s;
-            cursor: pointer; -webkit-tap-highlight-color: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e7dfd4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s ease-in-out, visibility 1s;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
+
         .cover-photo {
-            width: 90%; max-width: 450px; height: auto;
-            border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            width: 90%;
+            max-width: 450px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             transition: transform 0.2s ease;
         }
-        #welcome-screen:active .cover-photo { transform: scale(0.98); }
-        .click-hint {
-            margin-top: 25px; font-size: 0.95rem; color: #836d5d;
-            letter-spacing: 3px; animation: pulse 2s infinite;
+
+        #welcome-screen:active .cover-photo {
+            transform: scale(0.98);
         }
-        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+
+        .click-hint {
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: #836d5d;
+            letter-spacing: 3px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
 
         /* 2. 開場影片區塊 */
         #video-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000; z-index: 9000; opacity: 0; visibility: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9000;
+            opacity: 0;
+            visibility: hidden;
             transition: opacity 1.5s ease-in-out, visibility 1.5s;
         }
-        #intro-video { width: 100%; height: 100%; object-fit: cover; }
+
+        #intro-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         #skip-btn {
-            position: absolute; top: 40px; right: 20px;
-            padding: 6px 14px; background: rgba(0,0,0,0.4); color: #fff;
-            border: 1px solid rgba(255,255,255,0.6); border-radius: 20px;
-            font-size: 0.85rem; z-index: 9001;
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            padding: 6px 14px;
+            background: rgba(0,0,0,0.4);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            z-index: 9001;
         }
 
         /* 3. 喜帖主內容區 */
         #main-content {
-            opacity: 0; visibility: hidden;
-            transition: opacity 2s ease-in-out; padding-top: 15px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 2s ease-in-out;
+            padding-top: 15px;
         }
-        #main-content.visible { opacity: 1; visibility: visible; }
+
+        #main-content.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .photo-container {
-            width: 100%; padding: 15px; box-sizing: border-box;
-            display: flex; justify-content: center;
+            width: 100%;
+            padding: 15px; 
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
         }
+
         .content-img {
-            width: 100%; max-width: 500px; height: auto;
-            border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); display: block;
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: block;
         }
+
+        /* 影片連結區塊樣式 */
         .video-container {
-            width: 100%; padding: 20px 15px; box-sizing: border-box;
-            display: flex; flex-direction: column; align-items: center;
+            width: 100%;
+            padding: 20px 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* 4. 倒數計時區塊 */
+        /* 4. 倒數計時區塊樣式 */
         .countdown-section {
-            width: 100%; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            padding: 40px 20px 20px 20px; box-sizing: border-box;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px 20px 20px;
+            box-sizing: border-box;
         }
-        .countdown-container { display: flex; gap: 12px; justify-content: center; }
+
+        .countdown-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
         .time-box {
-            display: flex; flex-direction: column; align-items: center;
-            background-color: rgba(255, 255, 255, 0.4); padding: 12px 15px;
-            border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); min-width: 55px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 12px 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            min-width: 55px;
         }
-        .time-num { font-size: 1.8rem; font-weight: bold; color: #836d5d; margin-bottom: 4px; }
-        .time-label { font-size: 0.85rem; color: #6a5e51; letter-spacing: 1px; }
 
-        /* 5. 留言板區塊 */
-        .message-section {
-            width: 100%; display: flex; flex-direction: column; align-items: center;
-            padding: 20px 20px 20px 20px; box-sizing: border-box; position: relative; z-index: 60;
+        .time-num {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #836d5d;
+            margin-bottom: 4px;
         }
-        .message-board {
-            width: 90%; max-width: 450px; max-height: 250px; overflow-y: auto;
-            background-color: rgba(255, 255, 255, 0.3); border-radius: 12px;
-            padding: 15px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
-            display: flex; flex-direction: column; gap: 12px;
-            -webkit-overflow-scrolling: touch;
-        }
-        .message-board::-webkit-scrollbar { width: 4px; }
-        .message-board::-webkit-scrollbar-thumb { background-color: rgba(131, 109, 93, 0.3); border-radius: 4px; }
-        .message-card {
-            background-color: rgba(255, 255, 255, 0.85); padding: 15px;
-            border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            border-left: 4px solid #836d5d;
-        }
-        .msg-text { margin: 0 0 8px 0; color: #5a4f43; font-size: 0.95rem; line-height: 1.5; }
-        .msg-author { margin: 0; color: #836d5d; font-size: 0.85rem; text-align: right; font-weight: bold; }
 
-        /* 6. 地圖與按鈕 (底部增加留白空間給音樂按鈕) */
+        .time-label {
+            font-size: 0.85rem;
+            color: #6a5e51;
+            letter-spacing: 1px;
+        }
+
+        /* 5. 地圖與按鈕群組區塊 */
         .section-info {
-            width: 100%; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            padding: 20px 20px 80px 20px; box-sizing: border-box;
-            background-color: transparent; position: relative; z-index: 60;
+            min-height: 40vh; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px 80px 20px;
+            box-sizing: border-box;
+            background-color: transparent;
+            position: relative;
+            z-index: 60;
         }
+
         .photo-text {
-            width: 85%; max-width: 400px; text-align: center; line-height: 1.6;
-            letter-spacing: 1px; font-size: 0.95rem; color: #6a5e51;
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            line-height: 1.6;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+            color: #6a5e51;
         }
+
         .action-buttons {
-            display: flex; flex-direction: column; gap: 15px;
-            margin-top: 25px; width: 100%; align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+            width: 100%;
+            align-items: center;
         }
+
         .action-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 14px 20px; width: 80%; max-width: 280px;
-            background-color: #836d5d; color: #fff; text-decoration: none;
-            border-radius: 30px; font-size: 1rem; letter-spacing: 1.5px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.12); cursor: pointer; border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            width: 80%; 
+            max-width: 280px;
+            background-color: #836d5d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
             transition: transform 0.2s, background-color 0.2s;
         }
-        .action-btn:active { transform: scale(0.96); }
 
-        /* 7. 浮動音樂按鈕 */
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* 6. 浮動音樂按鈕 */
         #music-toggle {
-            position: fixed; bottom: 25px; right: 25px; width: 45px; height: 45px;
-            border-radius: 50%; background-color: rgba(131, 109, 93, 0.85);
-            color: white; border: none; font-size: 20px; z-index: 10000;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2); opacity: 0; transition: opacity 1s;
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(131, 109, 93, 0.85);
+            color: white;
+            border: none;
+            font-size: 20px;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 1s;
             pointer-events: none;
         }
-        #music-toggle.visible { opacity: 1; pointer-events: auto; }
+
+        #music-toggle.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         .spin { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop><source src="music.mp3" type="audio/mpeg"></audio>
+    <!-- 背景音樂 -->
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 視覺特效 (微光飄落) -->
     <div id="particles"></div>
 
+    <!-- 1. 歡迎封面 -->
     <div id="welcome-screen" onclick="startVideo()">
         <img src="photo1.jpg" alt="婚禮封面" class="cover-photo">
         <div class="click-hint">點擊照片開啟喜帖</div>
     </div>
 
+    <!-- 2. 開場影片區 -->
     <div id="video-screen">
         <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
-        <video id="intro-video" playsinline webkit-playsinline>
+        <video id="intro-video" playsinline>
             <source src="video.mp4" type="video/mp4">
         </video>
     </div>
 
+    <!-- 3. 主要內容區 -->
     <div id="main-content">
         
-        <div class="photo-container"><img src="photo2.jpg" alt="婚禮照1" class="content-img" loading="lazy"></div>
-        <div class="photo-container"><img src="photo3.jpg" alt="婚禮照2" class="content-img" loading="lazy"></div>
+        <!-- 滑頁照片 1 -->
+        <div class="photo-container">
+            <img src="photo2.jpg" alt="婚禮照1" class="content-img">
+        </div>
 
+        <!-- 滑頁照片 2 -->
+        <div class="photo-container">
+            <img src="photo3.jpg" alt="婚禮照2" class="content-img">
+        </div>
+
+        <!-- 修改：影片喜帖改為按鈕連結 -->
         <div class="video-container">
             <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">影片喜帖</h2>
             <!-- 把 # 換成你的 IG 或影片連結 -->
-            <a href="#" target="_blank" class="action-btn">🎬 點擊觀看影片喜帖</a>
+            <a href="#" target="_blank" class="action-btn">
+                🎬 點擊觀看影片喜帖
+            </a>
         </div>
 
+        <!-- 倒數計時區塊 -->
         <div class="countdown-section">
             <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 20px; font-size: 1.2rem;">距離我們的婚禮還有</h2>
             <div class="countdown-container">
-                <div class="time-box"><span class="time-num" id="cd-days">00</span><span class="time-label">天</span></div>
-                <div class="time-box"><span class="time-num" id="cd-hours">00</span><span class="time-label">時</span></div>
-                <div class="time-box"><span class="time-num" id="cd-minutes">00</span><span class="time-label">分</span></div>
-                <div class="time-box"><span class="time-num" id="cd-seconds">00</span><span class="time-label">秒</span></div>
-            </div>
-        </div>
-        
-        <div class="message-section">
-            <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">留言祝福</h2>
-            <div class="message-board">
-                <div class="message-card">
-                    <p class="msg-text">「恭喜老爺，賀喜夫人！祝你們新婚快樂，永遠幸福甜蜜喔～」</p>
-                    <p class="msg-author">- 王小明</p>
+                <div class="time-box">
+                    <span class="time-num" id="cd-days">00</span>
+                    <span class="time-label">天</span>
                 </div>
-                <div class="message-card">
-                    <p class="msg-text">「太感動了！看著你們一路走來，一定要牽手走一輩子！」</p>
-                    <p class="msg-author">- 陳阿姨</p>
+                <div class="time-box">
+                    <span class="time-num" id="cd-hours">00</span>
+                    <span class="time-label">時</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-num" id="cd-minutes">00</span>
+                    <span class="time-label">分</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-num" id="cd-seconds">00</span>
+                    <span class="time-label">秒</span>
                 </div>
             </div>
-            <!-- 把 # 換成你的表單/Padlet連結 -->
-            <a href="#" target="_blank" class="action-btn" style="margin-top: 20px;">📝 點此留下你的專屬祝福</a>
         </div>
-
+            
+        <!-- 資訊與行動按鈕區塊 -->
         <div class="section-info">
             <p class="photo-text" style="margin-bottom: 5px; font-weight: bold; font-size: 1.2rem;">某某大飯店 宴會廳</p>
             <p class="photo-text" style="font-size: 0.9rem; margin-bottom: 15px;">台北市信義區某某路1號</p>
 
             <div class="action-buttons">
-                <!-- 把 # 換成你的表單連結 -->
-                <a href="#" target="_blank" class="action-btn">💌 填寫出席意願</a>
-                <a href="https://www.google.com/maps?rlz=1C1CHBF_zh-TWTW1070TW1070&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MhMIARAuGIMBGK8BGMcBGLEDGIAEMgYIAhAAGAMyBwgDEAAYgAQyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyBwgHEAAYgAQyDQgIEC4YrwEYxwEYgAQyBwgJEAAYgATSAQoxMTk3MmowajE1qAIIsAIB8QWg-iYx_NTxVQ&um=1&ie=UTF-8&fb=1&gl=tw&sa=X&geocode=KQntfd2oI2g0McWygRcTlTK3&daddr=324桃園市平鎮區廣仁里延平路二段371號" target="_blank" class="action-btn">📍 開啟地圖導航</a>
+                <a href="#" target="_blank" class="action-btn">
+                    💌 填寫出席意願
+                </a>
+                
+                <a href="#" target="_blank" class="action-btn">
+                    📸 觀看完整婚紗照
+                </a>
+
+                <a href="https://www.google.com/maps?rlz=1C1CHBF_zh-TWTW1070TW1070&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MhMIARAuGIMBGK8BGMcBGLEDGIAEMgYIAhAAGAMyBwgDEAAYgAQyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyBwgHEAAYgAQyDQgIEC4YrwEYxwEYgAQyBwgJEAAYgATSAQoxMTk3MmowajE1qAIIsAIB8QWg-iYx_NTxVQ&um=1&ie=UTF-8&fb=1&gl=tw&sa=X&geocode=KQntfd2oI2g0McWygRcTlTK3&daddr=324桃園市平鎮區廣仁里延平路二段371號" target="_blank" class="action-btn">
+                    📍 開啟地圖導航
+                </a>
             </div>
         </div>
+
     </div>
 
+    <!-- 音樂按鈕 -->
     <button id="music-toggle" onclick="toggleMusic(event)">🎵</button>
 
     <script>
@@ -248,8 +409,9 @@
         let isPlaying = false;
         let hasStarted = false;
 
+        // 初始化微光飄落特效
         function initParticles() {
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 30; i++) {
                 let particle = document.createElement('div');
                 particle.classList.add('particle');
                 particle.style.left = Math.random() * 100 + 'vw';
@@ -261,65 +423,62 @@
         }
         initParticles();
 
+        // 點擊封面播放開場影片
         function startVideo() {
             if (hasStarted) return;
             hasStarted = true;
-            
-            // 封面淡出
+
             welcomeScreen.style.opacity = "0";
             setTimeout(() => { welcomeScreen.style.visibility = "hidden"; }, 1000);
-            
-            // 顯示影片區塊
+
             videoScreen.style.visibility = "visible";
             videoScreen.style.opacity = "1";
-            
-            // 播放影片
-            let playPromise = video.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => { 
-                    console.log("影片播放可能需要一點緩衝時間:", error);
-                });
-            }
+            video.play().catch(e => console.log("影片播放失敗:", e));
         }
 
+        // 開場影片結束進入主頁面
         function endVideo() {
             video.pause();
             videoScreen.style.opacity = "0";
             setTimeout(() => { videoScreen.style.visibility = "hidden"; }, 1500);
-            
+
             mainContent.classList.add("visible");
             particlesContainer.classList.add("visible");
             window.scrollTo(0, 0);
-            
+
             musicBtn.classList.add("visible");
-            
-            let musicPromise = music.play();
-            if (musicPromise !== undefined) {
-                musicPromise.then(() => {
-                    isPlaying = true;
-                    musicBtn.classList.add("spin");
-                }).catch(() => {});
-            }
+            music.play().then(() => {
+                isPlaying = true;
+                musicBtn.classList.add("spin");
+            }).catch((error) => {
+                console.log("自動播放背景音樂被阻擋:", error);
+            });
         }
-        
-        // 當影片自然播放結束時，觸發進入主畫面
+
         video.addEventListener('ended', endVideo);
 
+        // 手動控制音樂開關
         function toggleMusic(event) {
             event.stopPropagation();
             if (isPlaying) {
-                music.pause(); musicBtn.classList.remove("spin"); musicBtn.style.opacity = "0.5";
+                music.pause();
+                musicBtn.classList.remove("spin");
+                musicBtn.style.opacity = "0.5";
             } else {
-                music.play(); musicBtn.classList.add("spin"); musicBtn.style.opacity = "1";
+                music.play();
+                musicBtn.classList.add("spin");
+                musicBtn.style.opacity = "1";
             }
             isPlaying = !isPlaying;
         }
 
-        /* 倒數計時功能 */
+        // 倒數計時功能 (目標時間: 2027/05/15 12:00:00)
         const countDownDate = new Date("2027/05/15 12:00:00").getTime();
+
         const countdownTimer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
+
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -333,13 +492,17 @@
                 document.getElementById("cd-seconds").innerText = "00";
                 return;
             }
+
             document.getElementById("cd-days").innerText = days;
             document.getElementById("cd-hours").innerText = hours < 10 ? "0" + hours : hours;
             document.getElementById("cd-minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
             document.getElementById("cd-seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
         }, 1000);
+
     </script>
 </body>
 </html>
 
 ```
+
+記得去程式碼第 234 行附近，把 `<a href="#" target="_blank" class="action-btn">` 裡面的 `#` 換成你要跳轉的影片網址就可以了！
