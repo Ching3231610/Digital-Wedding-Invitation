@@ -23,8 +23,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* 確保不會擋住按鈕點擊 */
-            z-index: 50; /* 覆蓋在背景上，但低於音樂按鈕 */
+            pointer-events: none;
+            z-index: 50;
             opacity: 0;
             transition: opacity 3s ease-in-out;
         }
@@ -157,6 +157,27 @@
             display: block;
         }
 
+        /* 內嵌影片區塊樣式 */
+        .video-container {
+            width: 100%;
+            padding: 20px 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .content-video {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: block;
+            outline: none;
+            background-color: #000;
+        }
+
         /* 4. 倒數計時區塊樣式 */
         .countdown-section {
             width: 100%;
@@ -210,7 +231,7 @@
             box-sizing: border-box;
             background-color: transparent;
             position: relative;
-            z-index: 60; /* 確保按鈕可被點擊，高於特效 */
+            z-index: 60;
         }
 
         .photo-text {
@@ -223,7 +244,6 @@
             color: #6a5e51;
         }
 
-        /* 統一風格的行動按鈕群 */
         .action-buttons {
             display: flex;
             flex-direction: column;
@@ -292,7 +312,7 @@
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- 視覺特效 (微光飄落容器) -->
+    <!-- 視覺特效 (微光飄落) -->
     <div id="particles"></div>
 
     <!-- 1. 歡迎封面 -->
@@ -301,7 +321,7 @@
         <div class="click-hint">點擊照片開啟喜帖</div>
     </div>
 
-    <!-- 2. 開場影片區 -->
+    <!-- 2. 開場影片區 (維持原來的影片) -->
     <div id="video-screen">
         <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
         <video id="intro-video" playsinline>
@@ -309,7 +329,7 @@
         </video>
     </div>
 
-    <!-- 3. 主要內容區 (影片結束後顯示) -->
+    <!-- 3. 主要內容區 -->
     <div id="main-content">
         
         <!-- 滑頁照片 1 -->
@@ -320,6 +340,13 @@
         <!-- 滑頁照片 2 -->
         <div class="photo-container">
             <img src="photo3.jpg" alt="婚禮照2" class="content-img">
+        </div>
+
+        <!-- 新增：影片喜帖區塊 -->
+        <div class="video-container">
+            <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">影片喜帖</h2>
+            <!-- 加上 controls 讓賓客可以自由播放/暫停/調音量 -->
+            <video id="inline-video" src="video2.mp4" controls playsinline class="content-video"></video>
         </div>
 
         <!-- 倒數計時區塊 -->
@@ -344,20 +371,21 @@
                 </div>
             </div>
         </div>
+            
+        <!-- 資訊與行動按鈕區塊 -->
+        <div class="section-info">
+            <p class="photo-text" style="margin-bottom: 5px; font-weight: bold; font-size: 1.2rem;">某某大飯店 宴會廳</p>
+            <p class="photo-text" style="font-size: 0.9rem; margin-bottom: 15px;">台北市信義區某某路1號</p>
 
-            <!-- 按鈕群組 -->
             <div class="action-buttons">
-                <!-- 填寫意願按鈕 (請把 # 換成你的 Google 表單連結) -->
                 <a href="#" target="_blank" class="action-btn">
                     💌 填寫出席意願
                 </a>
                 
-                <!-- 婚紗照相簿按鈕 (請把 # 換成你的 Google 雲端相簿連結) -->
                 <a href="#" target="_blank" class="action-btn">
                     📸 觀看完整婚紗照
                 </a>
 
-                <!-- 地圖導航按鈕 (保留了你的專屬地圖網址) -->
                 <a href="https://www.google.com/maps?rlz=1C1CHBF_zh-TWTW1070TW1070&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MhMIARAuGIMBGK8BGMcBGLEDGIAEMgYIAhAAGAMyBwgDEAAYgAQyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyBwgHEAAYgAQyDQgIEC4YrwEYxwEYgAQyBwgJEAAYgATSAQoxMTk3MmowajE1qAIIsAIB8QWg-iYx_NTxVQ&um=1&ie=UTF-8&fb=1&gl=tw&sa=X&geocode=KQntfd2oI2g0McWygRcTlTK3&daddr=324桃園市平鎮區廣仁里延平路二段371號" target="_blank" class="action-btn">
                     📍 開啟地圖導航
                 </a>
@@ -373,6 +401,7 @@
         const welcomeScreen = document.getElementById("welcome-screen");
         const videoScreen = document.getElementById("video-screen");
         const video = document.getElementById("intro-video");
+        const inlineVideo = document.getElementById("inline-video"); // 新增的內嵌影片
         const mainContent = document.getElementById("main-content");
         const music = document.getElementById("bg-music");
         const musicBtn = document.getElementById("music-toggle");
@@ -395,6 +424,7 @@
         }
         initParticles();
 
+        // 點擊封面播放開場影片
         function startVideo() {
             if (hasStarted) return;
             hasStarted = true;
@@ -407,13 +437,14 @@
             video.play().catch(e => console.log("影片播放失敗:", e));
         }
 
+        // 開場影片結束進入主頁面
         function endVideo() {
             video.pause();
             videoScreen.style.opacity = "0";
             setTimeout(() => { videoScreen.style.visibility = "hidden"; }, 1500);
 
             mainContent.classList.add("visible");
-            particlesContainer.classList.add("visible"); // 顯示飄落特效
+            particlesContainer.classList.add("visible");
             window.scrollTo(0, 0);
 
             musicBtn.classList.add("visible");
@@ -427,6 +458,7 @@
 
         video.addEventListener('ended', endVideo);
 
+        // 手動控制音樂開關
         function toggleMusic(event) {
             event.stopPropagation();
             if (isPlaying) {
@@ -440,6 +472,16 @@
             }
             isPlaying = !isPlaying;
         }
+
+        // 貼心設計：當賓客點擊播放內嵌影片時，自動暫停背景音樂
+        inlineVideo.addEventListener('play', () => {
+            if (isPlaying) {
+                music.pause();
+                musicBtn.classList.remove("spin");
+                musicBtn.style.opacity = "0.5";
+                isPlaying = false;
+            }
+        });
 
         // 倒數計時功能 (目標時間: 2027/05/15 12:00:00)
         const countDownDate = new Date("2027/05/15 12:00:00").getTime();
