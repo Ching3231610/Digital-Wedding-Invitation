@@ -311,13 +311,13 @@
     </div>
 
     <!-- 2. 開場影片區 -->
-    <div id="video-screen">
-        <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
-        <!-- 加強版影片標籤：支援 iOS 與減輕負擔 -->
-        <video id="intro-video" playsinline webkit-playsinline preload="none">
-            <source src="video.mp4" type="video/mp4">
-        </video>
-    </div>
+<div id="video-screen">
+    <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
+    <!-- 終極加強版：加入 muted (靜音放行) 與 preload="auto" (提早載入) -->
+    <video id="intro-video" playsinline webkit-playsinline muted preload="auto">
+        <source src="video.mp4" type="video/mp4">
+    </video>
+</div>
 
     <!-- 3. 主要內容區 -->
     <div id="main-content">
