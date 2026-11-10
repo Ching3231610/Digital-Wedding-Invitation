@@ -12,36 +12,26 @@
             font-family: 'Helvetica Neue', Arial, 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
             overflow-x: hidden;
             background-color: #e7dfd4;
-            scroll-behavior: smooth; 
+            scroll-behavior: smooth;
             color: #5a4f43;
         }
 
         /* 浪漫視覺特效 */
         #particles {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 50; opacity: 0;
             transition: opacity 3s ease-in-out;
         }
-
-        #particles.visible {
-            opacity: 1;
-        }
-
+        #particles.visible { opacity: 1; }
         .particle {
-            position: absolute;
-            top: -10px;
+            position: absolute; top: -10px;
             background-color: rgba(255, 255, 255, 0.7);
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
             border-radius: 50%;
             animation: fall linear infinite;
+            will-change: transform, opacity;
         }
-
         @keyframes fall {
             0% { transform: translateY(-10px) translateX(0); opacity: 0; }
             10% { opacity: 1; }
@@ -51,378 +41,220 @@
 
         /* 1. 歡迎封面 */
         #welcome-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #e7dfd4;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 1s ease-in-out, visibility 1s;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #e7dfd4; display: flex;
+            flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9999; transition: opacity 1s ease-in-out, visibility 1s;
+            cursor: pointer; -webkit-tap-highlight-color: transparent;
         }
-
         .cover-photo {
-            width: 90%;
-            max-width: 450px;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            width: 90%; max-width: 450px; height: auto;
+            border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
             transition: transform 0.2s ease;
         }
-
-        #welcome-screen:active .cover-photo {
-            transform: scale(0.98);
-        }
-
+        #welcome-screen:active .cover-photo { transform: scale(0.98); }
         .click-hint {
-            margin-top: 25px;
-            font-size: 0.95rem;
-            color: #836d5d;
-            letter-spacing: 3px;
-            animation: pulse 2s infinite;
+            margin-top: 25px; font-size: 0.95rem; color: #836d5d;
+            letter-spacing: 3px; animation: pulse 2s infinite;
         }
-
-        @keyframes pulse {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
 
         /* 2. 開場影片區塊 */
         #video-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            z-index: 9000;
-            opacity: 0;
-            visibility: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000; z-index: 9000; opacity: 0; visibility: hidden;
             transition: opacity 1.5s ease-in-out, visibility 1.5s;
         }
-
-        #intro-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
+        #intro-video { width: 100%; height: 100%; object-fit: cover; }
         #skip-btn {
-            position: absolute;
-            top: 40px;
-            right: 20px;
-            padding: 6px 14px;
-            background: rgba(0,0,0,0.4);
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.6);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            z-index: 9001;
+            position: absolute; top: 40px; right: 20px;
+            padding: 6px 14px; background: rgba(0,0,0,0.4); color: #fff;
+            border: 1px solid rgba(255,255,255,0.6); border-radius: 20px;
+            font-size: 0.85rem; z-index: 9001;
         }
 
         /* 3. 喜帖主內容區 */
         #main-content {
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 2s ease-in-out;
-            padding-top: 15px;
+            opacity: 0; visibility: hidden;
+            transition: opacity 2s ease-in-out; padding-top: 15px;
         }
-
-        #main-content.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        #main-content.visible { opacity: 1; visibility: visible; }
         .photo-container {
-            width: 100%;
-            padding: 15px; 
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
+            width: 100%; padding: 15px; box-sizing: border-box;
+            display: flex; justify-content: center;
         }
-
         .content-img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            display: block;
+            width: 100%; max-width: 500px; height: auto;
+            border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); display: block;
         }
-
-        /* 影片連結區塊樣式 */
         .video-container {
-            width: 100%;
-            padding: 20px 15px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            width: 100%; padding: 20px 15px; box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 4. 倒數計時區塊樣式 */
+        /* 4. 倒數計時區塊 */
         .countdown-section {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px 20px 20px;
-            box-sizing: border-box;
+            width: 100%; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 40px 20px 20px 20px; box-sizing: border-box;
         }
-
-        .countdown-container {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-
+        .countdown-container { display: flex; gap: 12px; justify-content: center; }
         .time-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: rgba(255, 255, 255, 0.4);
-            padding: 12px 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            min-width: 55px;
+            display: flex; flex-direction: column; align-items: center;
+            background-color: rgba(255, 255, 255, 0.4); padding: 12px 15px;
+            border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); min-width: 55px;
         }
+        .time-num { font-size: 1.8rem; font-weight: bold; color: #836d5d; margin-bottom: 4px; }
+        .time-label { font-size: 0.85rem; color: #6a5e51; letter-spacing: 1px; }
 
-        .time-num {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #836d5d;
-            margin-bottom: 4px;
-        }
-
-        .time-label {
-            font-size: 0.85rem;
-            color: #6a5e51;
-            letter-spacing: 1px;
-        }
-
-        /* 5. 留言板區塊樣式 */
+        /* 5. 留言板區塊 */
         .message-section {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 20px 40px 20px;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 60;
+            width: 100%; display: flex; flex-direction: column; align-items: center;
+            padding: 20px 20px 40px 20px; box-sizing: border-box; position: relative; z-index: 60;
         }
-
         .message-board {
-            width: 90%;
-            max-width: 450px;
-            max-height: 250px;
-            overflow-y: auto;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            width: 90%; max-width: 450px; max-height: 250px; overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.3); border-radius: 12px;
+            padding: 15px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column; gap: 12px;
+            -webkit-overflow-scrolling: touch;
         }
-
-        .message-board::-webkit-scrollbar {
-            width: 4px;
-        }
-        .message-board::-webkit-scrollbar-thumb {
-            background-color: rgba(131, 109, 93, 0.3);
-            border-radius: 4px;
-        }
-
+        .message-board::-webkit-scrollbar { width: 4px; }
+        .message-board::-webkit-scrollbar-thumb { background-color: rgba(131, 109, 93, 0.3); border-radius: 4px; }
         .message-card {
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            background-color: rgba(255, 255, 255, 0.85); padding: 15px;
+            border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);
             border-left: 4px solid #836d5d;
         }
+        .msg-text { margin: 0 0 8px 0; color: #5a4f43; font-size: 0.95rem; line-height: 1.5; }
+        .msg-author { margin: 0; color: #836d5d; font-size: 0.85rem; text-align: right; font-weight: bold; }
 
-        .msg-text {
-            margin: 0 0 8px 0;
-            color: #5a4f43;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .msg-author {
-            margin: 0;
-            color: #836d5d;
-            font-size: 0.85rem;
-            text-align: right;
-            font-weight: bold;
-        }
-
-        /* 6. 地圖與按鈕群組區塊 */
+        /* 6. 地圖與按鈕 */
         .section-info {
-            min-height: 40vh; 
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 10px 20px 80px 20px;
-            box-sizing: border-box;
-            background-color: transparent;
-            position: relative;
-            z-index: 60;
+            min-height: 40vh; width: 100%; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 10px 20px 80px 20px; box-sizing: border-box;
+            background-color: transparent; position: relative; z-index: 60;
         }
-
         .photo-text {
-            width: 85%;
-            max-width: 400px;
-            text-align: center;
-            line-height: 1.6;
-            letter-spacing: 1px;
-            font-size: 0.95rem;
-            color: #6a5e51;
+            width: 85%; max-width: 400px; text-align: center; line-height: 1.6;
+            letter-spacing: 1px; font-size: 0.95rem; color: #6a5e51;
         }
-
         .action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 25px;
-            width: 100%;
-            align-items: center;
+            display: flex; flex-direction: column; gap: 15px;
+            margin-top: 25px; width: 100%; align-items: center;
         }
-
         .action-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 20px;
-            width: 80%; 
-            max-width: 280px;
-            background-color: #836d5d;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1rem;
-            letter-spacing: 1.5px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 14px 20px; width: 80%; max-width: 280px;
+            background-color: #836d5d; color: #fff; text-decoration: none;
+            border-radius: 30px; font-size: 1rem; letter-spacing: 1.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12); cursor: pointer; border: none;
             transition: transform 0.2s, background-color 0.2s;
         }
+        .action-btn:active { transform: scale(0.96); }
 
-        .action-btn:active {
-            transform: scale(0.96);
+        /* ================= 新增：內建相簿彈出層 ================= */
+        #gallery-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #e7dfd4; z-index: 11000;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
+        }
+        #gallery-modal.active { opacity: 1; visibility: visible; }
+        
+        .gallery-header {
+            text-align: center; padding: 20px; position: sticky; top: 0;
+            background-color: rgba(231, 223, 212, 0.95); z-index: 10;
+            backdrop-filter: blur(5px); box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .gallery-header h2 { margin: 0 0 10px 0; color: #6d5b4b; letter-spacing: 2px; font-size: 1.3rem; }
+        .close-gallery-btn {
+            padding: 8px 20px; background-color: #836d5d; color: white;
+            border: none; border-radius: 20px; font-size: 0.9rem; cursor: pointer;
+        }
+
+        .gallery-grid {
+            column-count: 2; column-gap: 15px; padding: 15px 20px 40px 20px;
+        }
+        @media (min-width: 768px) { .gallery-grid { column-count: 3; } }
+        
+        .gallery-item {
+            break-inside: avoid; margin-bottom: 15px; border-radius: 8px;
+            overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            cursor: pointer; transition: transform 0.2s;
+        }
+        .gallery-item:active { transform: scale(0.97); }
+        .gallery-item img { width: 100%; height: auto; display: block; }
+
+        /* 相簿圖片點擊放大的燈箱 */
+        #img-lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); z-index: 12000;
+            display: none; justify-content: center; align-items: center; flex-direction: column;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        #img-lightbox.visible { display: flex; opacity: 1; }
+        #img-lightbox img {
+            max-width: 90%; max-height: 80vh; border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5); object-fit: contain;
+        }
+        .close-lightbox-btn {
+            margin-top: 20px; padding: 8px 25px; background-color: rgba(255, 255, 255, 0.2);
+            color: white; border: 1px solid white; border-radius: 25px; font-size: 1rem; cursor: pointer;
         }
 
         /* 7. 浮動音樂按鈕 */
         #music-toggle {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background-color: rgba(131, 109, 93, 0.85);
-            color: white;
-            border: none;
-            font-size: 20px;
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            opacity: 0;
-            transition: opacity 1s;
+            position: fixed; bottom: 25px; right: 25px; width: 45px; height: 45px;
+            border-radius: 50%; background-color: rgba(131, 109, 93, 0.85);
+            color: white; border: none; font-size: 20px; z-index: 10000;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2); opacity: 0; transition: opacity 1s;
             pointer-events: none;
         }
-
-        #music-toggle.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
+        #music-toggle.visible { opacity: 1; pointer-events: auto; }
         .spin { animation: spin 3s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <!-- 背景音樂 -->
-    <audio id="bg-music" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- 視覺特效 (微光飄落) -->
+    <audio id="bg-music" loop preload="none"><source src="music.mp3" type="audio/mpeg"></audio>
     <div id="particles"></div>
 
-    <!-- 1. 歡迎封面 -->
     <div id="welcome-screen" onclick="startVideo()">
         <img src="photo1.jpg" alt="婚禮封面" class="cover-photo">
         <div class="click-hint">點擊照片開啟喜帖</div>
     </div>
 
-    <!-- 2. 開場影片區 -->
     <div id="video-screen">
         <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
-        <video id="intro-video" playsinline>
-            <source src="video.mp4" type="video/mp4">
-        </video>
+        <video id="intro-video" playsinline preload="none"><source src="video.mp4" type="video/mp4"></video>
     </div>
 
-    <!-- 3. 主要內容區 -->
     <div id="main-content">
         
-        <!-- 滑頁照片 1 -->
-        <div class="photo-container">
-            <img src="photo2.jpg" alt="婚禮照1" class="content-img">
-        </div>
+        <div class="photo-container"><img src="photo2.jpg" alt="婚禮照1" class="content-img" loading="lazy"></div>
+        <div class="photo-container"><img src="photo3.jpg" alt="婚禮照2" class="content-img" loading="lazy"></div>
 
-        <!-- 滑頁照片 2 -->
-        <div class="photo-container">
-            <img src="photo3.jpg" alt="婚禮照2" class="content-img">
-        </div>
-
-        <!-- 影片喜帖按鈕連結 -->
         <div class="video-container">
             <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">影片喜帖</h2>
-            <a href="#" target="_blank" class="action-btn">
-                🎬 點擊觀看影片喜帖
-            </a>
+            <a href="#" target="_blank" class="action-btn">🎬 點擊觀看影片喜帖</a>
         </div>
 
-        <!-- 倒數計時區塊 -->
         <div class="countdown-section">
             <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 20px; font-size: 1.2rem;">距離我們的婚禮還有</h2>
             <div class="countdown-container">
-                <div class="time-box">
-                    <span class="time-num" id="cd-days">00</span>
-                    <span class="time-label">天</span>
-                </div>
-                <div class="time-box">
-                    <span class="time-num" id="cd-hours">00</span>
-                    <span class="time-label">時</span>
-                </div>
-                <div class="time-box">
-                    <span class="time-num" id="cd-minutes">00</span>
-                    <span class="time-label">分</span>
-                </div>
-                <div class="time-box">
-                    <span class="time-num" id="cd-seconds">00</span>
-                    <span class="time-label">秒</span>
-                </div>
+                <div class="time-box"><span class="time-num" id="cd-days">00</span><span class="time-label">天</span></div>
+                <div class="time-box"><span class="time-num" id="cd-hours">00</span><span class="time-label">時</span></div>
+                <div class="time-box"><span class="time-num" id="cd-minutes">00</span><span class="time-label">分</span></div>
+                <div class="time-box"><span class="time-num" id="cd-seconds">00</span><span class="time-label">秒</span></div>
             </div>
         </div>
         
-        <!-- 留言祝福區塊 -->
         <div class="message-section">
             <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">留言祝福</h2>
-            
             <div class="message-board">
                 <div class="message-card">
                     <p class="msg-text">「恭喜老爺，賀喜夫人！祝你們新婚快樂，永遠幸福甜蜜喔～」</p>
@@ -432,43 +264,46 @@
                     <p class="msg-text">「太感動了！看著你們一路走來，一定要牽手走一輩子！」</p>
                     <p class="msg-author">- 陳阿姨</p>
                 </div>
-                <div class="message-card">
-                    <p class="msg-text">「百年好合，早生貴子！婚禮當天見啦！」</p>
-                    <p class="msg-author">- 大學同學 俊傑</p>
-                </div>
             </div>
-
-            <a href="#" target="_blank" class="action-btn" style="margin-top: 20px;">
-                📝 點此留下你的專屬祝福
-            </a>
+            <a href="#" target="_blank" class="action-btn" style="margin-top: 20px;">📝 點此留下你的專屬祝福</a>
         </div>
 
-        <!-- 資訊與行動按鈕區塊 -->
         <div class="section-info">
             <p class="photo-text" style="margin-bottom: 5px; font-weight: bold; font-size: 1.2rem;">某某大飯店 宴會廳</p>
             <p class="photo-text" style="font-size: 0.9rem; margin-bottom: 15px;">台北市信義區某某路1號</p>
 
             <div class="action-buttons">
-                <!-- 填寫出席意願 -->
-                <a href="#" target="_blank" class="action-btn">
-                    💌 填寫出席意願
-                </a>
+                <a href="#" target="_blank" class="action-btn">💌 填寫出席意願</a>
                 
-                <!-- 觀看完整婚紗照 -->
-                <a href="gallery.html" class="action-btn">
-                    📸 觀看完整婚紗照
-                </a>
-
-                <!-- 地圖導航 -->
-                <a href="https://www.google.com/maps?rlz=1C1CHBF_zh-TWTW1070TW1070&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MhMIARAuGIMBGK8BGMcBGLEDGIAEMgYIAhAAGAMyBwgDEAAYgAQyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyBwgHEAAYgAQyDQgIEC4YrwEYxwEYgAQyBwgJEAAYgATSAQoxMTk3MmowajE1qAIIsAIB8QWg-iYx_NTxVQ&um=1&ie=UTF-8&fb=1&gl=tw&sa=X&geocode=KQntfd2oI2g0McWygRcTlTK3&daddr=324桃園市平鎮區廣仁里延平路二段371號" target="_blank" class="action-btn">
-                    📍 開啟地圖導航
-                </a>
+                <!-- 修改：點擊後不再跳轉網頁，而是打開同一頁的相簿圖層 -->
+                <button onclick="openGallery()" class="action-btn">📸 觀看完整婚紗照</button>
+                
+                <a href="https://www.google.com/maps?rlz=1C1CHBF_zh-TWTW1070TW1070&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MhMIARAuGIMBGK8BGMcBGLEDGIAEMgYIAhAAGAMyBwgDEAAYgAQyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyBwgHEAAYgAQyDQgIEC4YrwEYxwEYgAQyBwgJEAAYgATSAQoxMTk3MmowajE1qAIIsAIB8QWg-iYx_NTxVQ&um=1&ie=UTF-8&fb=1&gl=tw&sa=X&geocode=KQntfd2oI2g0McWygRcTlTK3&daddr=324桃園市平鎮區廣仁里延平路二段371號" target="_blank" class="action-btn">📍 開啟地圖導航</a>
             </div>
         </div>
-
     </div>
 
-    <!-- 音樂按鈕 -->
+    <!-- ================= 內建相簿區塊 ================= -->
+    <div id="gallery-modal">
+        <div class="gallery-header">
+            <h2>我們的婚紗照</h2>
+            <button class="close-gallery-btn" onclick="closeGallery()">✕ 返回喜帖</button>
+        </div>
+        <div class="gallery-grid">
+            <!-- 相簿照片，加上 loading="lazy" 讓它不要一開始就佔用網路 -->
+            <div class="gallery-item" onclick="openLightbox('wedding1.jpg')"><img src="wedding1.jpg" alt="婚紗照" loading="lazy"></div>
+            <div class="gallery-item" onclick="openLightbox('wedding2.jpg')"><img src="wedding2.jpg" alt="婚紗照" loading="lazy"></div>
+            <div class="gallery-item" onclick="openLightbox('wedding3.jpg')"><img src="wedding3.jpg" alt="婚紗照" loading="lazy"></div>
+            <!-- 如果還有照片可以繼續加在下面 -->
+        </div>
+    </div>
+
+    <!-- 單張照片放大燈箱 -->
+    <div id="img-lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="放大照片">
+        <button class="close-lightbox-btn">關閉</button>
+    </div>
+
     <button id="music-toggle" onclick="toggleMusic(event)">🎵</button>
 
     <script>
@@ -483,9 +318,8 @@
         let isPlaying = false;
         let hasStarted = false;
 
-        // 初始化微光飄落特效
         function initParticles() {
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 15; i++) {
                 let particle = document.createElement('div');
                 particle.classList.add('particle');
                 particle.style.left = Math.random() * 100 + 'vw';
@@ -500,20 +334,15 @@
         function startVideo() {
             if (hasStarted) return;
             hasStarted = true;
-
             welcomeScreen.style.opacity = "0";
             setTimeout(() => { welcomeScreen.style.visibility = "hidden"; }, 1000);
-
             videoScreen.style.visibility = "visible";
             videoScreen.style.opacity = "1";
             
-            // 加入防呆機制：如果影片讀取失敗，自動跳到主畫面，避免卡黑畫面
+            video.load();
             let playPromise = video.play();
             if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    console.log("影片無法播放，直接跳轉至喜帖內容:", error);
-                    endVideo(); 
-                });
+                playPromise.catch(error => { endVideo(); });
             }
         }
 
@@ -521,48 +350,37 @@
             video.pause();
             videoScreen.style.opacity = "0";
             setTimeout(() => { videoScreen.style.visibility = "hidden"; }, 1500);
-
             mainContent.classList.add("visible");
             particlesContainer.classList.add("visible");
             window.scrollTo(0, 0);
-
             musicBtn.classList.add("visible");
             
-            // 音樂防呆機制
+            music.load();
             let musicPromise = music.play();
             if (musicPromise !== undefined) {
                 musicPromise.then(() => {
                     isPlaying = true;
                     musicBtn.classList.add("spin");
-                }).catch((error) => {
-                    console.log("瀏覽器阻擋自動播放背景音樂:", error);
-                });
+                }).catch(() => {});
             }
         }
-
         video.addEventListener('ended', endVideo);
 
         function toggleMusic(event) {
             event.stopPropagation();
             if (isPlaying) {
-                music.pause();
-                musicBtn.classList.remove("spin");
-                musicBtn.style.opacity = "0.5";
+                music.pause(); musicBtn.classList.remove("spin"); musicBtn.style.opacity = "0.5";
             } else {
-                music.play();
-                musicBtn.classList.add("spin");
-                musicBtn.style.opacity = "1";
+                music.play(); musicBtn.classList.add("spin"); musicBtn.style.opacity = "1";
             }
             isPlaying = !isPlaying;
         }
 
-        // 倒數計時功能 (目標時間: 2027/05/15 12:00:00)
+        /* 倒數計時功能 */
         const countDownDate = new Date("2027/05/15 12:00:00").getTime();
-
         const countdownTimer = setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -576,13 +394,37 @@
                 document.getElementById("cd-seconds").innerText = "00";
                 return;
             }
-
             document.getElementById("cd-days").innerText = days;
             document.getElementById("cd-hours").innerText = hours < 10 ? "0" + hours : hours;
             document.getElementById("cd-minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
             document.getElementById("cd-seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
         }, 1000);
 
+        /* ================= 相簿與燈箱控制 ================= */
+        const galleryModal = document.getElementById("gallery-modal");
+        const imgLightbox = document.getElementById("img-lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+
+        function openGallery() {
+            galleryModal.classList.add("active");
+            // 隱藏音樂按鈕避免畫面太雜
+            musicBtn.style.display = "none"; 
+        }
+
+        function closeGallery() {
+            galleryModal.classList.remove("active");
+            musicBtn.style.display = "flex";
+        }
+
+        function openLightbox(imageSrc) {
+            lightboxImg.src = imageSrc;
+            imgLightbox.classList.add("visible");
+        }
+
+        function closeLightbox() {
+            imgLightbox.classList.remove("visible");
+            setTimeout(() => { lightboxImg.src = ""; }, 300);
+        }
     </script>
 </body>
 </html>
