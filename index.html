@@ -267,4 +267,322 @@
 
         /* 6. 地圖與按鈕群組區塊 */
         .section-info {
-            min-height: 40vh;
+            min-height: 40vh; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px 80px 20px;
+            box-sizing: border-box;
+            background-color: transparent;
+            position: relative;
+            z-index: 60;
+        }
+
+        .photo-text {
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            line-height: 1.6;
+            letter-spacing: 1px;
+            font-size: 0.95rem;
+            color: #6a5e51;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 20px;
+            width: 80%; 
+            max-width: 280px;
+            background-color: #836d5d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* 7. 浮動音樂按鈕 */
+        #music-toggle {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(131, 109, 93, 0.85);
+            color: white;
+            border: none;
+            font-size: 20px;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 1s;
+            pointer-events: none;
+        }
+
+        #music-toggle.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spin { animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- 背景音樂 -->
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 視覺特效 (微光飄落) -->
+    <div id="particles"></div>
+
+    <!-- 1. 歡迎封面 -->
+    <div id="welcome-screen" onclick="startVideo()">
+        <img src="photo1.jpg" alt="婚禮封面" class="cover-photo">
+        <div class="click-hint">點擊照片開啟喜帖</div>
+    </div>
+
+    <!-- 2. 開場影片區 -->
+    <div id="video-screen">
+        <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
+        <video id="intro-video" playsinline>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- 3. 主要內容區 -->
+    <div id="main-content">
+        
+        <!-- 滑頁照片 1 -->
+        <div class="photo-container">
+            <img src="photo2.jpg" alt="婚禮照1" class="content-img">
+        </div>
+
+        <!-- 滑頁照片 2 -->
+        <div class="photo-container">
+            <img src="photo3.jpg" alt="婚禮照2" class="content-img">
+        </div>
+
+        <!-- 影片喜帖按鈕連結 -->
+        <div class="video-container">
+            <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">影片喜帖</h2>
+            <a href="#" target="_blank" class="action-btn">
+                🎬 點擊觀看影片喜帖
+            </a>
+        </div>
+
+        <!-- 倒數計時區塊 -->
+        <div class="countdown-section">
+            <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 20px; font-size: 1.2rem;">距離我們的婚禮還有</h2>
+            <div class="countdown-container">
+                <div class="time-box">
+                    <span class="time-num" id="cd-days">00</span>
+                    <span class="time-label">天</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-num" id="cd-hours">00</span>
+                    <span class="time-label">時</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-num" id="cd-minutes">00</span>
+                    <span class="time-label">分</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-num" id="cd-seconds">00</span>
+                    <span class="time-label">秒</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 留言祝福區塊 -->
+        <div class="message-section">
+            <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">留言祝福</h2>
+            
+            <div class="message-board">
+                <div class="message-card">
+                    <p class="msg-text">「恭喜老爺，賀喜夫人！祝你們新婚快樂，永遠幸福甜蜜喔～」</p>
+                    <p class="msg-author">- 王小明</p>
+                </div>
+                <div class="message-card">
+                    <p class="msg-text">「太感動了！看著你們一路走來，一定要牽手走一輩子！」</p>
+                    <p class="msg-author">- 陳阿姨</p>
+                </div>
+                <div class="message-card">
+                    <p class="msg-text">「百年好合，早生貴子！婚禮當天見啦！」</p>
+                    <p class="msg-author">- 大學同學 俊傑</p>
+                </div>
+            </div>
+
+            <a href="#" target="_blank" class="action-btn" style="margin-top: 20px;">
+                📝 點此留下你的專屬祝福
+            </a>
+        </div>
+
+        <!-- 資訊與行動按鈕區塊 -->
+        <div class="section-info">
+            <p class="photo-text" style="margin-bottom: 5px; font-weight: bold; font-size: 1.2rem;">某某大飯店 宴會廳</p>
+            <p class="photo-text" style="font-size: 0.9rem; margin-bottom: 15px;">台北市信義區某某路1號</p>
+
+            <div class="action-buttons">
+                <!-- 填寫出席意願 -->
+                <a href="#" target="_blank" class="action-btn">
+                    💌 填寫出席意願
+                </a>
+                
+                <!-- 觀看完整婚紗照 -->
+                <a href="gallery.html" class="action-btn">
+                    📸 觀看完整婚紗照
+                </a>
+
+                <!-- 地圖導航 -->
+                <a href="https://www.google.com/maps?rlz=1C1CHBF_zh-TWTW1070TW1070&gs_lcrp=EgZjaHJvbWUqBggAEEUYOzIGCAAQRRg7MhMIARAuGIMBGK8BGMcBGLEDGIAEMgYIAhAAGAMyBwgDEAAYgAQyBwgEEAAYgAQyBwgFEAAYgAQyBwgGEAAYgAQyBwgHEAAYgAQyDQgIEC4YrwEYxwEYgAQyBwgJEAAYgATSAQoxMTk3MmowajE1qAIIsAIB8QWg-iYx_NTxVQ&um=1&ie=UTF-8&fb=1&gl=tw&sa=X&geocode=KQntfd2oI2g0McWygRcTlTK3&daddr=324桃園市平鎮區廣仁里延平路二段371號" target="_blank" class="action-btn">
+                    📍 開啟地圖導航
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 音樂按鈕 -->
+    <button id="music-toggle" onclick="toggleMusic(event)">🎵</button>
+
+    <script>
+        const welcomeScreen = document.getElementById("welcome-screen");
+        const videoScreen = document.getElementById("video-screen");
+        const video = document.getElementById("intro-video");
+        const mainContent = document.getElementById("main-content");
+        const music = document.getElementById("bg-music");
+        const musicBtn = document.getElementById("music-toggle");
+        const particlesContainer = document.getElementById("particles");
+        
+        let isPlaying = false;
+        let hasStarted = false;
+
+        // 初始化微光飄落特效
+        function initParticles() {
+            for (let i = 0; i < 30; i++) {
+                let particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.width = particle.style.height = (Math.random() * 5 + 3) + 'px';
+                particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                particle.style.animationDelay = (Math.random() * 5) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+        initParticles();
+
+        function startVideo() {
+            if (hasStarted) return;
+            hasStarted = true;
+
+            welcomeScreen.style.opacity = "0";
+            setTimeout(() => { welcomeScreen.style.visibility = "hidden"; }, 1000);
+
+            videoScreen.style.visibility = "visible";
+            videoScreen.style.opacity = "1";
+            
+            // 加入防呆機制：如果影片讀取失敗，自動跳到主畫面，避免卡黑畫面
+            let playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("影片無法播放，直接跳轉至喜帖內容:", error);
+                    endVideo(); 
+                });
+            }
+        }
+
+        function endVideo() {
+            video.pause();
+            videoScreen.style.opacity = "0";
+            setTimeout(() => { videoScreen.style.visibility = "hidden"; }, 1500);
+
+            mainContent.classList.add("visible");
+            particlesContainer.classList.add("visible");
+            window.scrollTo(0, 0);
+
+            musicBtn.classList.add("visible");
+            
+            // 音樂防呆機制
+            let musicPromise = music.play();
+            if (musicPromise !== undefined) {
+                musicPromise.then(() => {
+                    isPlaying = true;
+                    musicBtn.classList.add("spin");
+                }).catch((error) => {
+                    console.log("瀏覽器阻擋自動播放背景音樂:", error);
+                });
+            }
+        }
+
+        video.addEventListener('ended', endVideo);
+
+        function toggleMusic(event) {
+            event.stopPropagation();
+            if (isPlaying) {
+                music.pause();
+                musicBtn.classList.remove("spin");
+                musicBtn.style.opacity = "0.5";
+            } else {
+                music.play();
+                musicBtn.classList.add("spin");
+                musicBtn.style.opacity = "1";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // 倒數計時功能 (目標時間: 2027/05/15 12:00:00)
+        const countDownDate = new Date("2027/05/15 12:00:00").getTime();
+
+        const countdownTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById("cd-days").innerText = "00";
+                document.getElementById("cd-hours").innerText = "00";
+                document.getElementById("cd-minutes").innerText = "00";
+                document.getElementById("cd-seconds").innerText = "00";
+                return;
+            }
+
+            document.getElementById("cd-days").innerText = days;
+            document.getElementById("cd-hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("cd-minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("cd-seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }, 1000);
+
+    </script>
+</body>
+</html>
