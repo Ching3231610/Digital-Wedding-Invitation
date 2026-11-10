@@ -224,7 +224,7 @@
             width: 90%;
             max-width: 450px;
             max-height: 250px;
-            overflow-y: auto; /* 允許上下滑動觀看留言 */
+            overflow-y: auto;
             background-color: rgba(255, 255, 255, 0.3);
             border-radius: 12px;
             padding: 15px;
@@ -248,7 +248,7 @@
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            border-left: 4px solid #836d5d; /* 側邊裝飾線 */
+            border-left: 4px solid #836d5d;
         }
 
         .msg-text {
@@ -420,11 +420,11 @@
             </div>
         </div>
         
-        <!-- 新增：留言祝福區塊 -->
+        <!-- 留言祝福區塊 -->
         <div class="message-section">
             <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">留言祝福</h2>
             
-            <!-- 留言展示牆 (可上下滑動) -->
+            <!-- 留言展示牆 -->
             <div class="message-board">
                 <div class="message-card">
                     <p class="msg-text">「恭喜老爺，賀喜夫人！祝你們新婚快樂，永遠幸福甜蜜喔～」</p>
@@ -438,10 +438,9 @@
                     <p class="msg-text">「百年好合，早生貴子！婚禮當天見啦！」</p>
                     <p class="msg-author">- 大學同學 俊傑</p>
                 </div>
-                <!-- 你可以複製上面的 <div class="message-card">...</div> 來手動增加更多精選留言 -->
             </div>
 
-            <!-- 前往外部留言板按鈕 (建議連結至 Padlet) -->
+            <!-- 前往外部留言板按鈕 -->
             <a href="#" target="_blank" class="action-btn" style="margin-top: 20px;">
                 📝 點此留下你的專屬祝福
             </a>
@@ -453,11 +452,13 @@
             <p class="photo-text" style="font-size: 0.9rem; margin-bottom: 15px;">台北市信義區某某路1號</p>
 
             <div class="action-buttons">
+                <!-- 填寫出席意願 (請將 # 替換為 Google 表單連結) -->
                 <a href="#" target="_blank" class="action-btn">
                     💌 填寫出席意願
                 </a>
                 
-                <a href="#" target="_blank" class="action-btn">
+                <!-- 觀看完整婚紗照 (已連結至剛剛建立的相簿頁面) -->
+                <a href="gallery.html" class="action-btn">
                     📸 觀看完整婚紗照
                 </a>
 
