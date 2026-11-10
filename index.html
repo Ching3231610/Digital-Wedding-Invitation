@@ -313,7 +313,8 @@
     <!-- 2. 開場影片區 -->
     <div id="video-screen">
         <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
-        <video id="intro-video" playsinline>
+        <!-- 加強版影片標籤：支援 iOS 與減輕負擔 -->
+        <video id="intro-video" playsinline webkit-playsinline preload="none">
             <source src="video.mp4" type="video/mp4">
         </video>
     </div>
