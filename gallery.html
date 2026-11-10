@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我們的婚紗照</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-family: 'Helvetica Neue', Arial, 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
+            background-color: #e7dfd4; /* 統一底色 */
+            color: #5a4f43;
+        }
+
+        /* 頂部導覽列 */
+        .header {
+            text-align: center;
+            padding: 30px 20px 20px 20px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            color: #6d5b4b;
+            margin: 0 0 15px 0;
+        }
+
+        /* 返回按鈕 */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 20px;
+            background-color: rgba(131, 109, 93, 0.2);
+            color: #5a4f43;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:active {
+            background-color: rgba(131, 109, 93, 0.4);
+        }
+
+        /* 瀑布流相簿區塊 */
+        .gallery-container {
+            column-count: 2; /* 手機版預設 2 排 */
+            column-gap: 15px;
+            padding: 10px 20px 40px 20px;
+        }
+
+        /* 電腦或平板螢幕變寬時，自動變成 3 排 */
+        @media (min-width: 768px) {
+            .gallery-container { column-count: 3; }
+        }
+
+        .gallery-item {
+            break-inside: avoid; /* 防止圖片被切斷 */
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .gallery-item:active {
+            transform: scale(0.97);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 點擊放大的燈箱特效 */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: none; /* 預設隱藏 */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #lightbox.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        #lightbox-img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            object-fit: contain;
+        }
+
+        /* 燈箱關閉按鈕 */
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 25px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            border-radius: 25px;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部標題與返回按鈕 -->
+    <div class="header">
+        <h1>我們的婚紗照</h1>
+        <!-- 點擊會回到你的主喜帖 -->
+        <a href="index.html" class="back-btn">⟵ 返回喜帖</a>
+    </div>
+
+    <!-- 相簿圖片區 -->
+    <div class="gallery-container">
+        <!-- 第 1 張照片 -->
+        <div class="gallery-item" onclick="openLightbox('wedding1.jpg')">
+            <img src="wedding1.jpg" alt="婚紗照">
+        </div>
+        
+        <!-- 第 2 張照片 -->
+        <div class="gallery-item" onclick="openLightbox('wedding2.jpg')">
+            <img src="wedding2.jpg" alt="婚紗照">
+        </div>
+        
+        <!-- 第 3 張照片 -->
+        <div class="gallery-item" onclick="openLightbox('wedding3.jpg')">
+            <img src="wedding3.jpg" alt="婚紗照">
+        </div>
+        
+        <!-- 第 4 張照片 -->
+        <div class="gallery-item" onclick="openLightbox('wedding4.jpg')">
+            <img src="wedding4.jpg" alt="婚紗照">
+        </div>
+
+        <!-- 如果你有更多照片，只要複製上面一小段 <div class="gallery-item">...</div> 貼在下方即可 -->
+    </div>
+
+    <!-- 點擊放大的燈箱 (平常隱藏，點圖片才會跳出來) -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="放大照片">
+        <button class="close-btn">關閉</button>
+    </div>
+
+    <script>
+        const lightbox = document.getElementById("lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+
+        // 打開燈箱並載入對應圖片
+        function openLightbox(imageSrc) {
+            lightboxImg.src = imageSrc;
+            lightbox.classList.add("visible");
+        }
+
+        // 關閉燈箱 (點擊螢幕任何地方都可以關閉)
+        function closeLightbox() {
+            lightbox.classList.remove("visible");
+            // 延遲清空圖片連結，讓淡出動畫更順暢
+            setTimeout(() => { lightboxImg.src = ""; }, 300);
+        }
+    </script>
+</body>
+</html>
