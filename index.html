@@ -157,7 +157,7 @@
             display: block;
         }
 
-        /* 內嵌影片區塊樣式 */
+        /* 影片連結區塊樣式 */
         .video-container {
             width: 100%;
             padding: 20px 15px;
@@ -165,17 +165,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .content-video {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            display: block;
-            outline: none;
-            background-color: #000;
         }
 
         /* 4. 倒數計時區塊樣式 */
@@ -219,7 +208,65 @@
             letter-spacing: 1px;
         }
 
-        /* 5. 地圖與按鈕群組區塊 */
+        /* 5. 留言板區塊樣式 */
+        .message-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 20px 40px 20px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 60;
+        }
+
+        .message-board {
+            width: 90%;
+            max-width: 450px;
+            max-height: 250px;
+            overflow-y: auto; /* 允許上下滑動觀看留言 */
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* 隱藏捲軸，但保留滑動功能 */
+        .message-board::-webkit-scrollbar {
+            width: 4px;
+        }
+        .message-board::-webkit-scrollbar-thumb {
+            background-color: rgba(131, 109, 93, 0.3);
+            border-radius: 4px;
+        }
+
+        .message-card {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            border-left: 4px solid #836d5d; /* 側邊裝飾線 */
+        }
+
+        .msg-text {
+            margin: 0 0 8px 0;
+            color: #5a4f43;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .msg-author {
+            margin: 0;
+            color: #836d5d;
+            font-size: 0.85rem;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        /* 6. 地圖與按鈕群組區塊 */
         .section-info {
             min-height: 40vh; 
             width: 100%;
@@ -227,7 +274,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 30px 20px 80px 20px;
+            padding: 10px 20px 80px 20px;
             box-sizing: border-box;
             background-color: transparent;
             position: relative;
@@ -274,7 +321,7 @@
             transform: scale(0.96);
         }
 
-        /* 6. 浮動音樂按鈕 */
+        /* 7. 浮動音樂按鈕 */
         #music-toggle {
             position: fixed;
             bottom: 25px;
@@ -321,7 +368,7 @@
         <div class="click-hint">點擊照片開啟喜帖</div>
     </div>
 
-    <!-- 2. 開場影片區 (維持原來的影片) -->
+    <!-- 2. 開場影片區 -->
     <div id="video-screen">
         <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
         <video id="intro-video" playsinline>
@@ -342,11 +389,12 @@
             <img src="photo3.jpg" alt="婚禮照2" class="content-img">
         </div>
 
-        <!-- 新增：影片喜帖區塊 -->
+        <!-- 影片喜帖改為按鈕連結 -->
         <div class="video-container">
             <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">影片喜帖</h2>
-            <!-- 加上 controls 讓賓客可以自由播放/暫停/調音量 -->
-            <video id="inline-video" src="video2.mp4" controls playsinline class="content-video"></video>
+            <a href="#" target="_blank" class="action-btn">
+                🎬 點擊觀看影片喜帖
+            </a>
         </div>
 
         <!-- 倒數計時區塊 -->
@@ -371,7 +419,34 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 新增：留言祝福區塊 -->
+        <div class="message-section">
+            <h2 style="color: #6d5b4b; letter-spacing: 2px; margin-bottom: 15px; font-size: 1.2rem;">留言祝福</h2>
             
+            <!-- 留言展示牆 (可上下滑動) -->
+            <div class="message-board">
+                <div class="message-card">
+                    <p class="msg-text">「恭喜老爺，賀喜夫人！祝你們新婚快樂，永遠幸福甜蜜喔～」</p>
+                    <p class="msg-author">- 王小明</p>
+                </div>
+                <div class="message-card">
+                    <p class="msg-text">「太感動了！看著你們一路走來，一定要牽手走一輩子！」</p>
+                    <p class="msg-author">- 陳阿姨</p>
+                </div>
+                <div class="message-card">
+                    <p class="msg-text">「百年好合，早生貴子！婚禮當天見啦！」</p>
+                    <p class="msg-author">- 大學同學 俊傑</p>
+                </div>
+                <!-- 你可以複製上面的 <div class="message-card">...</div> 來手動增加更多精選留言 -->
+            </div>
+
+            <!-- 前往外部留言板按鈕 (建議連結至 Padlet) -->
+            <a href="#" target="_blank" class="action-btn" style="margin-top: 20px;">
+                📝 點此留下你的專屬祝福
+            </a>
+        </div>
+
         <!-- 資訊與行動按鈕區塊 -->
         <div class="section-info">
             <p class="photo-text" style="margin-bottom: 5px; font-weight: bold; font-size: 1.2rem;">某某大飯店 宴會廳</p>
@@ -401,7 +476,6 @@
         const welcomeScreen = document.getElementById("welcome-screen");
         const videoScreen = document.getElementById("video-screen");
         const video = document.getElementById("intro-video");
-        const inlineVideo = document.getElementById("inline-video"); // 新增的內嵌影片
         const mainContent = document.getElementById("main-content");
         const music = document.getElementById("bg-music");
         const musicBtn = document.getElementById("music-toggle");
@@ -424,7 +498,6 @@
         }
         initParticles();
 
-        // 點擊封面播放開場影片
         function startVideo() {
             if (hasStarted) return;
             hasStarted = true;
@@ -437,7 +510,6 @@
             video.play().catch(e => console.log("影片播放失敗:", e));
         }
 
-        // 開場影片結束進入主頁面
         function endVideo() {
             video.pause();
             videoScreen.style.opacity = "0";
@@ -458,7 +530,6 @@
 
         video.addEventListener('ended', endVideo);
 
-        // 手動控制音樂開關
         function toggleMusic(event) {
             event.stopPropagation();
             if (isPlaying) {
@@ -472,16 +543,6 @@
             }
             isPlaying = !isPlaying;
         }
-
-        // 貼心設計：當賓客點擊播放內嵌影片時，自動暫停背景音樂
-        inlineVideo.addEventListener('play', () => {
-            if (isPlaying) {
-                music.pause();
-                musicBtn.classList.remove("spin");
-                musicBtn.style.opacity = "0.5";
-                isPlaying = false;
-            }
-        });
 
         // 倒數計時功能 (目標時間: 2027/05/15 12:00:00)
         const countDownDate = new Date("2027/05/15 12:00:00").getTime();
