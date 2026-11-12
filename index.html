@@ -311,13 +311,13 @@
     </div>
 
     <!-- 2. 開場影片區 -->
-<div id="video-screen">
-    <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
-    <!-- 終極加強版：加入 muted (靜音放行) 與 preload="auto" (提早載入) -->
-    <video id="intro-video" playsinline webkit-playsinline muted preload="auto">
-        <source src="video.mp4" type="video/mp4">
-    </video>
-</div>
+    <div id="video-screen">
+        <button id="skip-btn" onclick="endVideo()">略過 ➔</button>
+        <!-- 移除了 muted 讓影片有聲音，並使用 playsinline 確保手機順利播放 -->
+        <video id="intro-video" playsinline webkit-playsinline>
+            <source src="video.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <!-- 3. 主要內容區 -->
     <div id="main-content">
@@ -354,6 +354,11 @@
                 </div>
             </div>
         </div>
+
+        <!-- 修復：補回被誤刪的資訊與按鈕外框 -->
+        <div class="section-info">
+            <p class="photo-text" style="margin-bottom: 5px; font-weight: bold; font-size: 1.2rem;">某某大飯店 宴會廳</p>
+            <p class="photo-text" style="font-size: 0.9rem; margin-bottom: 15px;">台北市信義區某某路1號</p>
 
             <div class="action-buttons">
                 <a href="https://forms.gle/bB2iVzjuYkoQkAP67" target="_blank" class="action-btn">
@@ -407,7 +412,19 @@
 
             videoScreen.style.visibility = "visible";
             videoScreen.style.opacity = "1";
-            video.play().catch(e => console.log("影片播放失敗:", e));
+            
+            // 強制重置影片進度與重新載入，避免快取卡死黑畫面
+            video.currentTime = 0;
+            video.load();
+            
+            let playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(e => {
+                    console.log("影片播放失敗，可能被瀏覽器阻擋，直接進入主頁面:", e);
+                    // 如果還是被擋，直接呼叫 endVideo() 讓畫面跳轉，絕對不會卡死
+                    endVideo(); 
+                });
+            }
         }
 
         // 開場影片結束進入主頁面
